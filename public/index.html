@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONIQ - Tienda de Ropa Premium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: #0a0e27;
+        }
+
+        /* Header */
+        header {
+            background: #1a1f3a;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #c9a961;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #c9a961;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #c9a961;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: 2px solid #c9a961;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            background: transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #c9a961;
+            color: #0a0e27;
+            box-shadow: 0 5px 15px rgba(201, 169, 97, 0.3);
+        }
+
+        .btn-login {
+            color: #c9a961;
+        }
+
+        .btn-register {
+            background: #c9a961;
+            color: #0a0e27;
+            border-color: #c9a961;
+        }
+
+        .btn-register:hover {
+            background: transparent;
+            color: #c9a961;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(10, 14, 39, 0.8), rgba(26, 31, 58, 0.8)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231a1f3a" width="1200" height="600"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: slideDown 0.8s ease;
+            color: #c9a961;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            animation: slideUp 0.8s ease;
+            color: #e0e0e0;
+        }
+
+        .btn-primary {
+            background: #c9a961;
+            color: #0a0e27;
+            padding: 15px 40px;
+            font-size: 16px;
+            border: 2px solid #c9a961;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: #c9a961;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section */
+        section {
+            padding: 80px 0;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #c9a961;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background: #1a1f3a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #2a2f4a;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(201, 169, 97, 0.2);
+            border-color: #c9a961;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            background: #2a2f4a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+        }
+
+        .product-price {
+            font-size: 24px;
+            color: #c9a961;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: #a0a0a0;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            background: transparent;
+            color: #c9a961;
+            border: 2px solid #c9a961;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            background: #c9a961;
+            color: #0a0e27;
+        }
+
+        /* Categories */
+        .categories {
+            background: #1a1f3a;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .category-card {
+            background: #2a2f4a;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            border: 2px solid #2a2f4a;
+        }
+
+        .category-card:hover {
+            background: #1a1f3a;
+            color: #c9a961;
+            transform: scale(1.05);
+            border-color: #c9a961;
+        }
+
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        /* Features */
+        .features {
+            background: #1a1f3a;
+            border-top: 2px solid #c9a961;
+            border-bottom: 2px solid #c9a961;
+        }
+
+        .features h2 {
+            color: #c9a961;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #c9a961;
+        }
+
+        .feature p {
+            color: #a0a0a0;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d1626;
+            color: #e0e0e0;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 2px solid #c9a961;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 15px;
+            color: #c9a961;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #c9a961;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2a2f4a;
+            padding-top: 20px;
+            text-align: center;
+            color: #a0a0a0;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">🛍️ ONIQ</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-login">Iniciar Sesión</a>
+                <a href="register.html" class="btn btn-register">Registrarse</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <h1>Bienvenido a ONIQ</h1>
+        <p>Tu tienda de ropa premium con los mejores estilos</p>
+        <button class="btn btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior: 'smooth'})">Ver Colección</button>
+    </section>
+
+    <!-- Categorías -->
+    <section class="categories" id="categorias">
+        <div class="container">
+            <h2>Categorías Principales</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">👔</div>
+                    <h3>Hombres</h3>
+                    <p>Ropa exclusiva para caballeros</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">👗</div>
+                    <h3>Mujeres</h3>
+                    <p>Colección elegante y moderna</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">👕</div>
+                    <h3>Casual</h3>
+                    <p>Estilos cómodos y versátiles</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">👟</div>
+                    <h3>Accesorios</h3>
+                    <p>Complementa tu look</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos -->
+    <section id="productos">
+        <div class="container">
+            <h2>Productos Destacados</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/imagenes/MUJER.jpg" alt="Camiseta Premium">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Camiseta Premium</div>
+                        <div class="product-price">$29.99</div>
+                        <div class="product-description">Camiseta 100% algodón, cómoda y duradera</div>
+                        <button class="btn-add-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/imagenes/JEANS-CLASICOS.jpg" alt="Jeans Clásicos">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Jeans Clásicos</div>
+                        <div class="product-price">$49.99</div>
+                        <div class="product-description">Jeans de alta calidad con ajuste perfecto</div>
+                        <button class="btn-add-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/imagenes/chaqueta elegante.jpg" alt="Chaqueta Elegante">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Chaqueta Elegante</div>
+                        <div class="product-price">$89.99</div>
+                        <div class="product-description">Chaqueta premium para cualquier ocasión</div>
+                        <button class="btn-add-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/imagenes/corbata de seda.jpg" alt="Corbata de Seda">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Corbata de Seda</div>
+                        <div class="product-price">$24.99</div>
+                        <div class="product-description">Corbata de seda natural, elegante y sofisticada</div>
+                        <button class="btn-add-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/imagenes/vestido de gala.jpg" alt="Vestido de Gala">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Vestido de Gala</div>
+                        <div class="product-price">$129.99</div>
+                        <div class="product-description">Vestido elegante para eventos especiales</div>
+                        <button class="btn-add-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/imagenes/HOMBRE.jpg" alt="Zapatillas Deportivas">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Zapatillas Deportivas</div>
+                        <div class="product-price">$79.99</div>
+                        <div class="product-description">Zapatillas cómodas y de alto desempeño</div>
+                        <button class="btn-add-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2>¿Por qué Elegirnos?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Envío Rápido</h3>
+                    <p>Recibe tu pedido en 2-3 días hábiles</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💳</div>
+                    <h3>Pago Seguro</h3>
+                    <p>Métodos de pago seguros y verificados</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Garantía</h3>
+                    <p>30 días de garantía en todas las compras</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Atención al cliente disponible siempre</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sobre ONIQ</h4>
+                <ul>
+                    <li><a href="#">Quiénes Somos</a></li>
+                    <li><a href="#">Nuestra Historia</a></li>
+                    <li><a href="#">Misión y Visión</a></li>
+                    <li><a href="#">Sostenibilidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Categorías</h4>
+                <ul>
+                    <li><a href="#">Hombres</a></li>
+                    <li><a href="#">Mujeres</a></li>
+                    <li><a href="#">Niños</a></li>
+                    <li><a href="#">Accesorios</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Servicio al Cliente</h4>
+                <ul>
+                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ONIQ - Tienda de Ropa Premium. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/store.js"></script>
+</body>
+</html>
