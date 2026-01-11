@@ -1,7 +1,9 @@
 backend/
 node_modules/
 python_backend/instance/
+python_backend/__pycache__/
 *.db
 __pycache__/
 *.pyc
 .git/
+*.log
