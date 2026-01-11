@@ -1,6 +1,8 @@
 // Configuración de API - Compatible con Node.js y Python Flask
 const API_NODE = "http://localhost:3000/api/auth";
-const API_PYTHON = "http://localhost:5000/api/auth";
+const API_PYTHON = window.location.hostname === 'localhost'
+    ? 'http://localhost:5000/api/auth'
+    : '/api/auth';
 
 // Detectar qué backend está disponible
 let API = API_PYTHON; // Por defecto usar Python

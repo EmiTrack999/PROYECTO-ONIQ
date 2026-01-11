@@ -1,5 +1,7 @@
 // Configuración de API
-const API_URL = 'http://localhost:5000/api';
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000/api'
+    : '/api';
 let token = localStorage.getItem('token');
 let currentUser = JSON.parse(localStorage.getItem('user') || '{}');
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
