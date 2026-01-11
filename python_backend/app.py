@@ -608,6 +608,7 @@ def init_db():
             print('✅ Productos de ejemplo agregados')
 
 if __name__ == '__main__':
-    init_db()
+    with app.app_context():
+        init_db()
     print('🚀 Servidor Python iniciando en http://localhost:5000')
     app.run(debug=True, port=5000)
