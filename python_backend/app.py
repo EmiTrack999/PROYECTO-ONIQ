@@ -11,8 +11,19 @@ app = Flask(__name__, static_folder='../public', static_url_path='')
 CORS(app)
 
 # Configuración
-app.config['SECRET_KEY'] = 'tu_clave_secreta_super_segura_aqui'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///oniq_store.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'tu_clave_secreta_super_segura_aqui')
+
+# Base de datos: PostgreSQL en producción, SQLite en desarrollo
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    # Render/Producción con PostgreSQL
+    if DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+else:
+    # Desarrollo local con SQLite
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///oniq_store.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -610,5 +621,9 @@ def init_db():
 if __name__ == '__main__':
     with app.app_context():
         init_db()
-    print('🚀 Servidor Python iniciando en http://localhost:5000')
-    app.run(debug=True, port=5000)
+    
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') != 'production'
+    
+    print(f'🚀 Servidor Python iniciando en puerto {port}')
+    app.run(debug=debug, host='0.0.0.0', port=port)

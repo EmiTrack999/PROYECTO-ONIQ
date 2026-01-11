@@ -1,0 +1,22 @@
+services:
+  # Web Service - Flask App
+  - type: web
+    name: oniq-store
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python python_backend/app.py
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: oniq-db
+          property: connectionString
+    
+databases:
+  # PostgreSQL Database
+  - name: oniq-db
+    plan: free
+    databaseName: oniq_store
+    user: oniq_user
