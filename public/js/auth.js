@@ -56,10 +56,14 @@ if (registerForm) {
     const data = await res.json();
 
     if (res.ok) {
-      alert("Registro exitoso ✅");
-      window.location.href = "/";
+      message.textContent = "✅ Registro exitoso. Redirigiendo al login...";
+      message.style.color = "#28a745";
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
     } else {
       message.textContent = data.message;
+      message.style.color = "crimson";
     }
   });
 }
