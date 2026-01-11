@@ -132,6 +132,8 @@ def register():
     email = data.get('email')
     password = data.get('password')
     
+    print(f"📝 Registro nuevo - Username: {username}, Email: {email}")
+    
     if not username or not email or not password:
         return jsonify({'message': 'Faltan datos'}), 400
     
@@ -142,10 +144,13 @@ def register():
         return jsonify({'message': 'El email ya está registrado'}), 400
     
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    print(f"🔐 Password hasheado: {hashed_password[:20]}...")
     
     new_user = User(username=username, email=email, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
+    
+    print(f"✅ Usuario creado exitosamente: {username}")
     
     return jsonify({'message': 'Usuario registrado exitosamente'}), 201
 
@@ -156,10 +161,23 @@ def login():
     username = data.get('username')
     password = data.get('password')
     
+    print(f"🔍 Login attempt - Username: {username}")
+    
     user = User.query.filter_by(username=username).first()
     
-    if not user or not bcrypt.check_password_hash(user.password, password):
-        return jsonify({'message': 'Credenciales inválidas'}), 401
+    if not user:
+        print(f"❌ Usuario no encontrado: {username}")
+        return jsonify({'message': 'Usuario no encontrado'}), 401
+    
+    print(f"✅ Usuario encontrado: {user.username}, ID: {user.id}")
+    print(f"🔐 Password hash en DB: {user.password[:20]}...")
+    
+    password_match = bcrypt.check_password_hash(user.password, password)
+    print(f"🔑 Password match: {password_match}")
+    
+    if not password_match:
+        print(f"❌ Contraseña incorrecta para usuario: {username}")
+        return jsonify({'message': 'Contraseña incorrecta'}), 401
     
     token = jwt.encode({
         'user_id': user.id,
