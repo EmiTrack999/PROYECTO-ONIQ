@@ -1,4 +1,9 @@
-const API = "http://localhost:3000/api/auth";
+// Configuración de API - Compatible con Node.js y Python Flask
+const API_NODE = "http://localhost:3000/api/auth";
+const API_PYTHON = "http://localhost:5000/api/auth";
+
+// Detectar qué backend está disponible
+let API = API_PYTHON; // Por defecto usar Python
 
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
@@ -9,22 +14,24 @@ if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("email").value;
+    const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
     const res = await fetch(`${API}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ username, password })
     });
 
     const data = await res.json();
 
     if (res.ok) {
+      localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      window.location.href = "store.html";
+      window.location.href = "store-enhanced.html";
     } else {
       message.textContent = data.message;
+      message.style.color = "crimson";
     }
   });
 }
@@ -34,14 +41,14 @@ if (registerForm) {
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("name").value;
+    const username = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     const res = await fetch(`${API}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password })
+      body: JSON.stringify({ username, email, password })
     });
 
     const data = await res.json();

@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0a0a;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,9 +22,10 @@
         }
 
         .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            background: #1f1f1f;
+            border: 2px solid #8B6F47;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
             max-width: 400px;
             width: 100%;
             padding: 40px;
@@ -32,15 +33,14 @@
 
         .logo {
             text-align: center;
-            font-size: 36px;
-            margin-bottom: 30px;
-            color: #667eea;
+            font-size: 48px;
+            margin-bottom: 20px;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            color: #333;
+            color: #f0f0f0;
             font-size: 28px;
         }
 
@@ -51,56 +51,63 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #333;
+            color: #d0d0d0;
             font-weight: 600;
         }
 
+        input[type="text"],
         input[type="email"],
         input[type="password"] {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
+            border: 2px solid #505050;
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s;
         }
 
+        input[type="text"]:focus,
         input[type="email"]:focus,
         input[type="password"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #8B6F47;
         }
 
         .btn-login {
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 14px;
+            background: #8B6F47;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
 
         .btn-login:hover {
+            background: #6B5437;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 111, 71, 0.4);
         }
 
         .register-link {
             text-align: center;
             margin-top: 20px;
-            color: #666;
+            color: #909090;
         }
 
         .register-link a {
-            color: #667eea;
+            color: #A0826D;
             text-decoration: none;
             font-weight: 600;
         }
 
         .register-link a:hover {
+            color: #8B6F47;
             text-decoration: underline;
         }
 
@@ -110,7 +117,7 @@
         }
 
         .back-link a {
-            color: #667eea;
+            color: #A0826D;
             text-decoration: none;
             font-weight: 600;
         }
@@ -118,6 +125,7 @@
         #message {
             text-align: center;
             margin-top: 15px;
+            color: #ff6b6b;
             padding: 10px;
             border-radius: 5px;
         }
@@ -143,13 +151,13 @@
         
         <form id="loginForm">
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" placeholder="Tu usuario" required>
             </div>
 
             <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" placeholder="tu contraseña" required>
+                <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
             </div>
 
             <button type="submit" class="btn-login">Iniciar Sesión</button>
