@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONIQ Store - Tienda Premium</title>
+    <link rel="stylesheet" href="css/store-enhanced.css?v=4.0">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-icon">🛍️</span>
+                <span class="logo-text">ONIQ</span>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Buscar productos..." />
+                <button id="searchBtn">🔍</button>
+            </div>
+            
+            <nav class="header-nav">
+                <div class="nav-item" id="wishlistBtn">
+                    <span class="icon">❤️</span>
+                    <span class="badge" id="wishlistCount">0</span>
+                </div>
+                <div class="nav-item" id="cartBtn">
+                    <span class="icon">🛒</span>
+                    <span class="badge" id="cartCount">0</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- FILTROS Y CATEGORÍAS -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-wrapper">
+                <div class="categories">
+                    <button class="category-btn active" data-category="all">Todos</button>
+                    <button class="category-btn" data-category="Electrónica">Electrónica</button>
+                    <button class="category-btn" data-category="Audio">Audio</button>
+                    <button class="category-btn" data-category="Wearables">Wearables</button>
+                    <button class="category-btn" data-category="Accesorios">Accesorios</button>
+                    <button class="category-btn" data-category="Almacenamiento">Almacenamiento</button>
+                </div>
+                
+                <div class="filter-controls">
+                    <select id="sortBy">
+                        <option value="name">Ordenar por Nombre</option>
+                        <option value="price-asc">Precio: Menor a Mayor</option>
+                        <option value="price-desc">Precio: Mayor a Menor</option>
+                        <option value="rating">Mejor Valorados</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="products-section">
+        <div class="container">
+            <div id="productsGrid" class="products-grid"></div>
+        </div>
+    </section>
+
+    <!-- LOADING -->
+    <div id="loading" class="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
+
+    <!-- MODAL CARRITO -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>🛒 Carrito de Compras</h2>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <h3>Total: $<span id="cartTotal">0.00</span></h3>
+                <button class="btn-checkout" onclick="checkout()">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL WISHLIST -->
+    <div id="wishlistModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>❤️ Lista de Deseos</h2>
+            <div id="wishlistItems"></div>
+        </div>
+    </div>
+
+    <script src="js/store-simple.js"></script>
+</body>
+</html>
