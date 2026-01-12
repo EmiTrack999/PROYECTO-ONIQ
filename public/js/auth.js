@@ -1,69 +1,76 @@
-// Configuración de API - Compatible con Node.js y Python Flask
-const API_NODE = "http://localhost:3000/api/auth";
-const API_PYTHON = window.location.hostname === 'localhost'
-    ? 'http://localhost:5000/api/auth'
-    : '/api/auth';
-
-// Detectar qué backend está disponible
-let API = API_PYTHON; // Por defecto usar Python
+// 🎭 LOGIN FANTASMA - Sin base de datos, todo en localStorage
+// Perfecto para Vercel y despliegues sin backend
 
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 const message = document.getElementById("message");
 
-// LOGIN
+// LOGIN FANTASMA
 if (loginForm) {
-  loginForm.addEventListener("submit", async (e) => {
+  loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const res = await fetch(`${API}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      window.location.href = "store-enhanced.html";
-    } else {
-      message.textContent = data.message;
+    // Validación simple
+    if (!username || !password) {
+      message.textContent = "❌ Por favor completa todos los campos";
       message.style.color = "crimson";
+      return;
     }
+
+    // Guardar sesión fantasma
+    const fakeToken = btoa(`${username}:${Date.now()}`);
+    const fakeUser = {
+      id: Math.random().toString(36).substr(2, 9),
+      username: username,
+      email: `${username}@oniq.com`,
+      isAdmin: username.toLowerCase() === 'admin'
+    };
+
+    localStorage.setItem("token", fakeToken);
+    localStorage.setItem("user", JSON.stringify(fakeUser));
+
+    // Mensaje de éxito
+    message.textContent = "✅ ¡Bienvenido! Accediendo a la tienda...";
+    message.style.color = "#28a745";
+
+    // Redirigir a la tienda
+    setTimeout(() => {
+      window.location.href = "store-enhanced.html";
+    }, 800);
   });
 }
 
-// REGISTRO
+// REGISTRO FANTASMA
 if (registerForm) {
-  registerForm.addEventListener("submit", async (e) => {
+  registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const username = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const res = await fetch(`${API}/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password })
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      message.textContent = "✅ Registro exitoso. Redirigiendo al login...";
-      message.style.color = "#28a745";
-      setTimeout(() => {
-        window.location.href = "login.html";
-      }, 1500);
-    } else {
-      message.textContent = data.message;
+    // Validación simple
+    if (!username || !email || !password) {
+      message.textContent = "❌ Por favor completa todos los campos";
       message.style.color = "crimson";
+      return;
     }
+
+    if (password.length < 4) {
+      message.textContent = "❌ La contraseña debe tener al menos 4 caracteres";
+      message.style.color = "crimson";
+      return;
+    }
+
+    // Simular registro exitoso
+    message.textContent = "✅ ¡Registro exitoso! Redirigiendo al login...";
+    message.style.color = "#28a745";
+
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1200);
   });
 }
