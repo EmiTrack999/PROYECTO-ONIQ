@@ -102,6 +102,119 @@
             color: #c9a961;
         }
 
+        /* Modal de Autenticación */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .auth-modal-content {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%);
+            margin: 10% auto;
+            padding: 40px;
+            border: 2px solid #c9a961;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            animation: slideDown 0.4s ease;
+            box-shadow: 0 10px 50px rgba(201, 169, 97, 0.3);
+        }
+
+        .auth-modal-content h2 {
+            color: #c9a961;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .auth-modal-content p {
+            color: #e0e0e0;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .auth-modal-footer {
+            font-size: 14px !important;
+            color: #a0a0a0 !important;
+            margin: 20px 0 10px 0 !important;
+        }
+
+        .auth-close {
+            color: #c9a961;
+            float: right;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .auth-close:hover {
+            color: #fff;
+        }
+
+        .auth-modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-modal {
+            padding: 15px 30px;
+            border: 2px solid #c9a961;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-modal-login {
+            background: transparent;
+            color: #c9a961;
+        }
+
+        .btn-modal-login:hover {
+            background: #c9a961;
+            color: #0a0e27;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(201, 169, 97, 0.4);
+        }
+
+        .btn-modal-register {
+            background: #c9a961;
+            color: #0a0e27;
+        }
+
+        .btn-modal-register:hover {
+            background: transparent;
+            color: #c9a961;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(201, 169, 97, 0.4);
+        }
+
+        .btn-modal-guest {
+            background: transparent;
+            color: #808080;
+            border-color: #505050;
+            font-size: 16px;
+        }
+
+        .btn-modal-guest:hover {
+            background: #505050;
+            color: #e0e0e0;
+            border-color: #808080;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(rgba(10, 14, 39, 0.8), rgba(26, 31, 58, 0.8)), 
@@ -423,8 +536,23 @@
     <section class="hero" id="inicio">
         <h1>Bienvenido a ONIQ</h1>
         <p>Tu tienda de ropa premium con los mejores estilos</p>
-        <button class="btn btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior: 'smooth'})">Ver Colección</button>
+        <button class="btn btn-primary" onclick="showAuthModal()">Entrar a la Tienda</button>
     </section>
+
+    <!-- Modal de Autenticación -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="auth-close" onclick="closeAuthModal()">&times;</span>
+            <h2>¡Únete a ONIQ!</h2>
+            <p>Elige una opción para continuar</p>
+            <div class="auth-modal-buttons">
+                <a href="login.html" class="btn-modal btn-modal-login">🔑 Iniciar Sesión</a>
+                <a href="register.html" class="btn-modal btn-modal-register">📝 Registrarse</a>
+            </div>
+            <p class="auth-modal-footer">O continúa explorando sin cuenta</p>
+            <button class="btn-modal btn-modal-guest" onclick="closeAuthModal(); document.getElementById('productos').scrollIntoView({behavior: 'smooth'})">👁️ Ver como invitado</button>
+        </div>
+    </div>
 
     <!-- Categorías -->
     <section class="categories" id="categorias">
@@ -610,5 +738,33 @@
     </footer>
 
     <script src="js/store.js"></script>
+    
+    <script>
+        // Funciones del modal de autenticación
+        function showAuthModal() {
+            document.getElementById('authModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('authModal');
+            if (event.target == modal) {
+                closeAuthModal();
+            }
+        }
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeAuthModal();
+            }
+        });
+    </script>
 </body>
 </html>
