@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -23,9 +23,9 @@
 
         .container {
             background: #1f1f1f;
-            border: 2px solid #8B6F47;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            border: 2px solid #c9a961;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(201, 169, 97, 0.3);
             max-width: 400px;
             width: 100%;
             padding: 40px;
@@ -40,7 +40,7 @@
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            color: #f0f0f0;
+            color: #c9a961;
             font-size: 28px;
         }
 
@@ -56,42 +56,40 @@
         }
 
         input[type="text"],
-        input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #505050;
-            background: #2a2a2a;
+            padding: 14px;
+            border: 2px solid #404040;
+            background: #0a0a0a;
             color: #e0e0e0;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             transition: border-color 0.3s;
         }
 
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus {
+        input:focus {
             outline: none;
-            border-color: #8B6F47;
+            border-color: #c9a961;
         }
 
         .btn-login {
             width: 100%;
-            padding: 14px;
-            background: #8B6F47;
-            color: white;
+            padding: 16px;
+            background: #c9a961;
+            color: #0a0a0a;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            margin-top: 10px;
         }
 
         .btn-login:hover {
-            background: #6B5437;
+            background: #b89551;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(139, 111, 71, 0.4);
+            box-shadow: 0 5px 20px rgba(201, 169, 97, 0.4);
         }
 
         .register-link {
@@ -101,73 +99,64 @@
         }
 
         .register-link a {
-            color: #A0826D;
+            color: #c9a961;
             text-decoration: none;
             font-weight: 600;
         }
 
         .register-link a:hover {
-            color: #8B6F47;
             text-decoration: underline;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .back-link a {
-            color: #A0826D;
-            text-decoration: none;
-            font-weight: 600;
         }
 
         #message {
             text-align: center;
             margin-top: 15px;
-            color: #ff6b6b;
-            padding: 10px;
-            border-radius: 5px;
+            font-weight: 600;
         }
 
-        .success {
-            background: #d4edda;
-            color: #155724;
+        .back-home {
+            text-align: center;
+            margin-top: 15px;
         }
 
-        .error {
-            background: #f8d7da;
-            color: #721c24;
+        .back-home a {
+            color: #606060;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-home a:hover {
+            color: #c9a961;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="back-link">
-            <a href="/">← Volver a Inicio</a>
-        </div>
-        <div class="logo">🛍️ ONIQ</div>
+        <div class="logo">🛍️</div>
         <h1>Iniciar Sesión</h1>
         
         <form id="loginForm">
             <div class="form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" placeholder="Tu usuario" required>
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" required>
             </div>
-
+            
             <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required>
             </div>
-
-            <button type="submit" class="btn-login">Iniciar Sesión</button>
+            
+            <button type="submit" class="btn-login">Entrar</button>
         </form>
 
+        <div id="message"></div>
+        
         <div class="register-link">
             ¿No tienes cuenta? <a href="register.html">Regístrate aquí</a>
         </div>
-
-        <p id="message"></p>
+        <div class="back-home">
+            <a href="home.html">← Volver al inicio</a>
+        </div>
     </div>
 
     <script src="js/auth.js"></script>

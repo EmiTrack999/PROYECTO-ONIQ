@@ -583,7 +583,7 @@ def get_categories():
 
 @app.route('/')
 def index():
-    return send_from_directory(app.static_folder, 'welcome.html')
+    return send_from_directory(app.static_folder, 'home.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
