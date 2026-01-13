@@ -578,3 +578,155 @@ window.onclick = (event) => {
         event.target.style.display = 'none';
     }
 };
+// ========== PANEL ADMIN CRUD ==========
+
+// Verificar si el usuario es admin al cargar
+document.addEventListener('DOMContentLoaded', () => {
+    checkAdminAccess();
+});
+
+function checkAdminAccess() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user.isAdmin) {
+        document.getElementById('adminFloatingBtn').style.display = 'block';
+    }
+}
+
+function openAdminPanel() {
+    document.getElementById('adminPanel').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    loadAdminProducts();
+}
+
+function closeAdminPanel() {
+    document.getElementById('adminPanel').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function showAdminTab(tabName) {
+    // Ocultar todos los tabs
+    document.querySelectorAll('.admin-tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Mostrar tab seleccionado
+    document.getElementById('admin' + tabName.charAt(0).toUpperCase() + tabName.slice(1)).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function showAddProductForm() {
+    document.getElementById('addProductForm').style.display = 'block';
+}
+
+function hideAddProductForm() {
+    document.getElementById('addProductForm').style.display = 'none';
+    clearProductForm();
+}
+
+function clearProductForm() {
+    document.getElementById('prodName').value = '';
+    document.getElementById('prodPrice').value = '';
+    document.getElementById('prodCategory').value = '';
+    document.getElementById('prodDesc').value = '';
+    document.getElementById('prodImage').value = '';
+}
+
+async function loadAdminProducts() {
+    const tbody = document.getElementById('productsTableBody');
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Cargando productos...</td></tr>';
+    
+    try {
+        const response = await fetch(`${API_URL}/products`);
+        const products = await response.json();
+        
+        if (products.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #606060;">No hay productos registrados</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = products.map(product => `
+            <tr>
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>$${product.price}</td>
+                <td>${product.category || 'Sin categoría'}</td>
+                <td>
+                    <button class="btn-admin-sm" onclick="editProduct(${product.id})">✏️ Editar</button>
+                    <button class="btn-admin-sm danger" onclick="deleteProduct(${product.id})">🗑️ Eliminar</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (error) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #ff4444;">Error al cargar productos</td></tr>';
+        console.error('Error loading admin products:', error);
+    }
+}
+
+async function saveProduct() {
+    const product = {
+        name: document.getElementById('prodName').value,
+        price: parseFloat(document.getElementById('prodPrice').value),
+        category: document.getElementById('prodCategory').value,
+        description: document.getElementById('prodDesc').value,
+        image_url: document.getElementById('prodImage').value
+    };
+    
+    if (!product.name || !product.price) {
+        showToast('⚠️ Por favor completa los campos requeridos', 'warning');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/products`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(product)
+        });
+        
+        if (response.ok) {
+            showToast('✅ Producto agregado exitosamente', 'success');
+            hideAddProductForm();
+            loadAdminProducts();
+            loadProducts(); // Recargar productos en la tienda
+        } else {
+            showToast('❌ Error al agregar producto', 'error');
+        }
+    } catch (error) {
+        console.error('Error saving product:', error);
+        showToast('❌ Error de conexión', 'error');
+    }
+}
+
+async function deleteProduct(id) {
+    if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+    
+    try {
+        const response = await fetch(`${API_URL}/products/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': token
+            }
+        });
+        
+        if (response.ok) {
+            showToast('✅ Producto eliminado', 'success');
+            loadAdminProducts();
+            loadProducts();
+        } else {
+            showToast('❌ Error al eliminar producto', 'error');
+        }
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        showToast('❌ Error de conexión', 'error');
+    }
+}
+
+function editProduct(id) {
+    showToast('ℹ️ Función de edición en desarrollo', 'info');
+}
